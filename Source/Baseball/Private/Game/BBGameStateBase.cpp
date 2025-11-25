@@ -106,14 +106,15 @@ void ABBGameStateBase::CountDown()
 
 	void ABBGameStateBase::MulticastRPCBroadcastTimer_Implementation()
 	{
-		for (TActorIterator<ABBPlayerController> It(GetWorld()); It; ++It)
+		
+		APlayerController* PC = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+		if (PC)
 		{
-			ABBPlayerController* BBPC = *It;
-			if (BBPC)
-			{
-				It->UpdateUITimer(TurnRemainTime);
-			}
+			ABBPlayerController* BBPC = Cast<ABBPlayerController>(PC);
+			if(BBPC)
+			BBPC->UpdateUITimer(TurnRemainTime);
 		}
+		
 	}
 
 
